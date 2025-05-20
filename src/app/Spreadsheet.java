@@ -6,9 +6,9 @@ public class Spreadsheet {
     private int theNumberOfColumns;
     private Cell[][] theCells;
     
-    public Spreadsheet() {
-        theNumberOfRows = 20;
-        theNumberOfColumns = 20;
+    public Spreadsheet(int theNumberOfRows, int theNumberOfColumns) {
+        this.theNumberOfRows = theNumberOfRows;
+        this.theNumberOfColumns = theNumberOfColumns;
         theCells = new Cell[theNumberOfRows][theNumberOfColumns];
         initializeCells();
     }

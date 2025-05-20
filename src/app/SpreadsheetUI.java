@@ -60,11 +60,11 @@ public class SpreadsheetUI extends JFrame {
         };
         
         // Initialize all cells with their default values
-        for (int row = 0; row < spreadsheet.getNumberOfRows(); row++) {
-            for (int col = 0; col < spreadsheet.getNumberOfColumns(); col++) {
-                model.setValueAt(spreadsheet.getCell(row, col).getFormula(), row, col);
-            }
-        }
+        //for (int row = 0; row < spreadsheet.getNumberOfRows(); row++) {
+        //    for (int col = 0; col < spreadsheet.getNumberOfColumns(); col++) {
+        //        model.setValueAt(spreadsheet.getCell(row, col).getFormula(), row, col);
+        //     }
+        //}
         
         // Add listener for cell changes
         model.addTableModelListener(new TableModelListener() {
