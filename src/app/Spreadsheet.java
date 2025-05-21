@@ -5,6 +5,7 @@ public class Spreadsheet {
     private int theNumberOfRows;
     private int theNumberOfColumns;
     private Cell[][] theCells;
+    private SpreadsheetUI ui;
     
     public Spreadsheet(int theNumberOfRows, int theNumberOfColumns) {
         this.theNumberOfRows = theNumberOfRows;
@@ -48,10 +49,34 @@ public class Spreadsheet {
         return null;
     }
 
+    public void setUI(SpreadsheetUI ui) {
+        this.ui = ui;
+    }
+
+    private void notifyUI() {
+        if (ui != null) {
+            ui.refreshTable();
+        }
+    }
+
     public void setCellFormula(int row, int col, String formula) {
         if (row >= 0 && row < theNumberOfRows && col >= 0 && col < theNumberOfColumns) {
             theCells[row][col].setFormula(formula);
+            notifyUI();
         }
+    }
+
+    public void clear() {
+        for (int i = 0; i < theNumberOfRows; i++) {
+            for (int j = 0; j < theNumberOfColumns; j++) {
+                theCells[i][j].clear();
+            }
+        }
+        notifyUI();
+    }
+
+    public void save() {
+        return;
     }
 
 }

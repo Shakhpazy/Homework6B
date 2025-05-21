@@ -6,7 +6,7 @@ public class Cell {
 
     public Cell() {
         formula = "";
-        value = 10;
+        value = 0;
     }
 
     public String getFormula() {
@@ -23,5 +23,10 @@ public class Cell {
 
     public void setFormula(String formula) {
         this.formula = formula;
+    }
+
+    public void clear() {
+        formula = "";
+        value = 0;
     }
 }
