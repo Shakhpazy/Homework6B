@@ -1,6 +1,6 @@
 package app;
 
-public class Spreadsheet {
+public class Spreadsheet implements SpreadsheetInterface{
 
     private int theNumberOfRows;
     private int theNumberOfColumns;
