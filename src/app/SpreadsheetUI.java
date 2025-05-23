@@ -1,7 +1,6 @@
 package app;
 import javax.swing.*;
 import javax.swing.table.*;
-import javax.swing.event.*;
 import java.awt.*;
 
 public class SpreadsheetUI extends JFrame {
@@ -99,8 +98,25 @@ public class SpreadsheetUI extends JFrame {
                 String newValue = (String)value;
                 String currentValue = spreadsheet.getCellFormula(row, col);
                 if (!newValue.equals(currentValue)) {
-                    //make sure the new value is properly formated whether it is a formula or a number
-                    spreadsheet.setCellFormula(row, col, newValue);
+                    newValue = newValue.toUpperCase();
+
+                    String userFormula = "(A1 + B2) * 3";
+                    Stack<Token> tokenStack = getFormula(userFormula);
+
+                    if (tokenStack.isEmpty()) {
+                        // Show error message for invalid formula
+                        JOptionPane.showMessageDialog(SpreadsheetUI.this,
+                                "Invalid formula format. Examples of valid formulas:\n" +
+                                        "A1+B1\n2*5\n3+C0",
+                                "Invalid Formula",
+                                JOptionPane.ERROR_MESSAGE);
+                        // Revert to previous value
+                        model.setValueAt(currentValue, row, col);
+                    } else {
+                        System.out.println("Valid formula.");
+                        spreadsheet.setCellFormula(row, col, newValue);
+                        // Proceed with building expression tree and evaluating
+                    }
                 }
             }
             
