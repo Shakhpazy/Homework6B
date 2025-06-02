@@ -1,6 +1,8 @@
 package app;
 
 import java.util.Stack;
+import java.io.FileWriter;
+
 
 public class Spreadsheet implements SpreadsheetInterface {
 
@@ -201,7 +203,23 @@ public class Spreadsheet implements SpreadsheetInterface {
     }
 
     public void save() {
-        return;
+        try {
+            FileWriter writer = new FileWriter("spreadsheet.txt");
+            writer.write(theNumberOfRows + "," + theNumberOfColumns + "\n");
+        
+            for (int i = 0; i < theNumberOfRows; i++) {
+                for (int j = 0; j < theNumberOfColumns; j++) {
+                    Cell cell = theCells[i][j];
+                    String formula = cell.getFormula();
+                    int value = cell.getValue();
+                    writer.write(i + "," + j + "," + formula + "," + value + "\n");
+                }
+            }
+            writer.close();
+            System.out.println("Spreadsheet saved to spreadsheet.txt");
+        } catch (java.io.IOException e) {
+            System.out.println("Error saving spreadsheet: " + e.getMessage());
+        }
     }
 
 }

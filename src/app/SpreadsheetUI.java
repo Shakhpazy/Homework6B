@@ -153,7 +153,7 @@ public class SpreadsheetUI extends JFrame {
     private void createRowHeader() {
         JList<String> rowHeader = new JList<>(new AbstractListModel<String>() {
             public int getSize() { return spreadsheet.getNumberOfRows(); }
-            public String getElementAt(int index) { return String.valueOf(index + 1); }
+            public String getElementAt(int index) { return String.valueOf(index); }
         });
         
         rowHeader.setFixedCellWidth(50);
