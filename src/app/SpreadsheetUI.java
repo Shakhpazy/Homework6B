@@ -95,37 +95,19 @@ public class SpreadsheetUI extends JFrame {
             
             @Override
             public void setValueAt(Object value, int row, int col) {
-                System.out.println("editing cell" + row + " " + col);
-                String newValue = (String)value;
-                String currentValue = spreadsheet.getCellFormula(row, col);
-                newValue = newValue.toUpperCase();
-                if (!newValue.equals(currentValue.toUpperCase())) {
-
-                    // String userFormula = "(A1 + B2) * 3";
-                    // Stack<Token> tokenStack = getFormula(userFormula);
-
-                    // if (tokenStack.isEmpty()) {
-                    //     // Show error message for invalid formula
-                    //     JOptionPane.showMessageDialog(SpreadsheetUI.this,
-                    //             "Invalid formula format. Examples of valid formulas:\n" +
-                    //                     "A1+B1\n2*5\n3+C0",
-                    //             "Invalid Formula",
-                    //             JOptionPane.ERROR_MESSAGE);
-                    //     // Revert to previous value
-                    //     model.setValueAt(currentValue, row, col);
-                    // } else {
-                    //     System.out.println("Valid formula.");
-                    //     spreadsheet.setCellFormula(row, col, newValue);
-                    //     // Proceed with building expression tree and evaluating
-                    // }
-
-                    spreadsheet.setCellFormula(row, col, newValue);
+                String input = ((String)value).trim().toUpperCase();
+                String current = spreadsheet.getCellFormula(row, col);
+                
+                if (!input.equals(current)) {
+                    // Always treat input as potential formula
+                    spreadsheet.setCellFormula(row, col, input);
                 }
             }
-            
+
             @Override
             public Object getValueAt(int row, int col) {
-                return spreadsheet.getCellFormula(row, col);
+                Cell cell = spreadsheet.getCell(row, col);
+                return cell.getFormula().isEmpty() ? "" : String.valueOf(cell.getValue());
             }
         };
     }

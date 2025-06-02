@@ -9,5 +9,6 @@ public class Main {
         SwingUtilities.invokeLater(() -> {
             new SpreadsheetUI(spreadsheet);
         });
+        
     }
 } 

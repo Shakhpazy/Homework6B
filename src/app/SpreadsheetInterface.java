@@ -48,7 +48,7 @@ public interface SpreadsheetInterface {
      * @param col the column index (0-based)
      * @param formula the new formula to set
      */
-    public void setCellFormula(int row, int col, String formula);
+    public void setCellValue(int row, int col, String formula);
     
     // Clear the spreadsheet
     public void clear();
