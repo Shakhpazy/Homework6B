@@ -1,5 +1,14 @@
 package app;
 
+/**
+ * This defines an interface for the cell, covering the
+ * necessary utility for a Cell class.
+ * 
+ * @author Mark Malyshev
+ * @author Yusuf Shakhpaz
+ * @author Georgia Karwhite
+ * @version June 2, 2025
+ */
 public interface CellInterface {
     /**
      * Gets the formula stored in this cell

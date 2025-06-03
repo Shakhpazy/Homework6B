@@ -5,18 +5,50 @@ import java.awt.*;
 
 public class SpreadsheetUI extends JFrame {
     // UI Components
+
+    /**
+     * The table of the spreadsheet
+     */
     private JTable table;
+
+    /**
+     * The toolbar of the spreadsheet
+     */
     private JToolBar toolbar;
+
+    /**
+     * The model of the spreadsheet
+     */
     private DefaultTableModel model;
+
+    /**
+     * The scroll pane of the spreadsheet
+     */
     private JScrollPane scrollPane;
     
-    // Data
+    //Data
+    /**
+     * The spreadsheet data
+     */
     private Spreadsheet spreadsheet;
-    
+
+    /**
+     * Creates a new spreadsheet GUI
+     * @param theSpreadsheet the data to be displayed with this spreadsheet
+     */
     public SpreadsheetUI(Spreadsheet theSpreadsheet) {
         this.spreadsheet = theSpreadsheet;
         spreadsheet.setUI(this);
         initializeUI();
+    }
+
+    /**
+     * Updates the entire table
+     */
+    public void refreshTable() {
+        if (model != null) {
+            model.fireTableDataChanged();
+        }
     }
 
     private void initializeUI() {
@@ -107,7 +139,20 @@ public class SpreadsheetUI extends JFrame {
             @Override
             public Object getValueAt(int row, int col) {
                 Cell cell = spreadsheet.getCell(row, col);
-                return cell.getFormula().isEmpty() ? "" : String.valueOf(cell.getValue());
+                if (cell.getFormula().isEmpty()) {
+                    return "";
+                }
+                // Cell depends on other cells, so we need to evaluate the formula
+                if (cell.getExpressionTree() != null) {
+                    try {
+                        cell.evaluate(spreadsheet);
+                        return String.valueOf(cell.getValue());
+                    } catch (Exception e) {
+                        return cell.getFormula();
+                    }
+                }
+                // For direct numbers, show the value
+                return String.valueOf(cell.getValue());
             }
         };
     }
@@ -153,7 +198,7 @@ public class SpreadsheetUI extends JFrame {
     private void createRowHeader() {
         JList<String> rowHeader = new JList<>(new AbstractListModel<String>() {
             public int getSize() { return spreadsheet.getNumberOfRows(); }
-            public String getElementAt(int index) { return String.valueOf(index); }
+            public String getElementAt(int index) { return String.valueOf(index + 1); }
         });
         
         rowHeader.setFixedCellWidth(50);
@@ -174,11 +219,5 @@ public class SpreadsheetUI extends JFrame {
         });
         
         scrollPane.setRowHeaderView(rowHeader);
-    }
-
-    public void refreshTable() {
-        if (model != null) {
-            model.fireTableDataChanged();
-        }
     }
 }
